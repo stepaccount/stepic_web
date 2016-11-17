@@ -1,3 +1,38 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
+#Question manager
+class QuestionManager(models.Manager):
+    def new():
+        pass
+    def popular():
+        pass
+
+#Question model
+class Question(models.Model):
+    objects = QuestionManager()
+    title = models.CharField(max_length = 255)
+    text = models.TextField()
+    added_at = models.DateTimeField(blank = True, db_index = True)
+    rating = models.IntegerField(db_index = True)
+    author = models.ForeignKey(User)
+    likes = models.ManyToManyField(User)
+    def __unicode__(self):
+        return self.title
+    def get_absolute_url(self):
+        return '/question/%d/' % self.pk
+    class Meta:
+        ordering = ['-added_at']
+        pass
+
+#Answer model
+class Answer(models.Model):
+    text = models.TextField()
+    added_at = models.DateTimeField(blank = True)
+    question = models.ForeignKey(Question)
+    author = models.ForeignKey(User)
+    def __unicode__(self):
+        return self.title
+    class Meta:
+        pass
+
