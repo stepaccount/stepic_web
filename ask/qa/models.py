@@ -15,8 +15,8 @@ class Question(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(blank = True, db_index = True)
     rating = models.IntegerField(db_index = True)
-    author = models.ForeignKey(User)
-    likes = models.ManyToManyField(User)
+    author = models.ForeignKey(User, related_name = '+')
+    likes = models.ManyToManyField(User, related_name = '+')
     def __unicode__(self):
         return self.title
     def get_absolute_url(self):
@@ -30,7 +30,7 @@ class Answer(models.Model):
     text = models.TextField()
     added_at = models.DateTimeField(blank = True)
     question = models.ForeignKey(Question)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, related_name = '+')
     def __unicode__(self):
         return self.title
     class Meta:
