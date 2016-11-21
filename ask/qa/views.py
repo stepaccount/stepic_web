@@ -53,5 +53,5 @@ def question(request, id):
     try:
         answers = Answer.objects.filter(question = user_question)[:]
     except Answer.DoesNotExists:
-        answers = None
+        answers = []
     return render(request, 'question_page.html', {'question': user_question, 'answers': answers,})
