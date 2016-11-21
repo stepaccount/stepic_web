@@ -6,11 +6,11 @@ from django.core.paginator import Paginator
 from .models import *
 
 @require_GET
-def test(request, *args, **kwargs):
+def test(request, *args):
     return HttpResponse('OK')
 
 @require_GET
-def mainroot(request, *args, **kwargs):
+def mainroot(request, *args):
     try:
         page = int(request.GET.get('page', 1))
         limit = 10
@@ -26,7 +26,7 @@ def mainroot(request, *args, **kwargs):
     return render(request, 'main_page.html', {'questions': page.object_list, 'paginator': paginator, 'page': page,})
 
 @require_GET
-def popular(request, *args, **kwargs):
+def popular(request, *args):
     try:
         page = int(request.GET.get('page', 1))
         limit = 10
@@ -42,10 +42,12 @@ def popular(request, *args, **kwargs):
     return render(request, 'pop_page.html', {'questions': page.object_list, 'paginator': paginator, 'page': page,})
     
 @require_GET
-def question(request, *args, **kwargs):
+def question(request, id):
     try:
-        q_num = int(args[0])
+        q_num = int(id)
         user_question = Question.objects.get(pk = q_num)
+    except Question.DoesNotExist:
+        raise Http404
     except Exception:
         raise Http404
     try:
