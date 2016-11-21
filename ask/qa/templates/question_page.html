@@ -7,11 +7,11 @@
     <p>{{ question.text }}</p>
     <p>
         <ul>
-        {{% for an in answers %}}
+        {% for an in answers %}
             <li>
                 {{ an.text }}
             </li>
-        {{% endfor %}}
+        {% endfor %}
         </ul>
     </p>
 </body>
