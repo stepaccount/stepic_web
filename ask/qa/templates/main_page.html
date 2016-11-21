@@ -1,0 +1,21 @@
+<html>
+<head>
+<title>Last questions</title>
+</head>
+<body>
+<h1>New questions</h1>
+<ul>
+    {% for q in questions %}
+        <li>
+            <h2>{{ q }}</h2>
+            <a href="{{ q.get_absolute_url }}">{{ q.get_absolute_url }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<p>
+    {% for p in paginator.page_range %}
+        <a href="{{ paginator.baseurl }}{{ p.number }}">{{{ p.number }}}</a>
+    {% endfor %}
+</p>
+</body>
+</html>

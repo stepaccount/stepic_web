@@ -11,4 +11,4 @@ sudo killall -SIGTERM gunicorn
 sudo gunicorn -b 0.0.0.0:8080 --pythonpath /home/box/web/ hello:app &
 sudo gunicorn -b 0.0.0.0:8000 --pythonpath /home/box/web/ask ask.wsgi:application &
 #sudo /etc/init.d/gunicorn restart
-sudo /etc/init.d/mysql start
+#sudo /etc/init.d/mysql start

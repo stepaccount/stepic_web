@@ -3,10 +3,14 @@ from django.contrib.auth.models import User
 
 #Question manager
 class QuestionManager(models.Manager):
-    def new():
-        pass
-    def popular():
-        pass
+    def new(self):
+        new_questions = self.order_by('-added_at')
+        return new_questions
+    def popular(self):
+        pop_questions = self.order_by('-rating')
+        return pop_questions
+    def question(self, id):
+        return self.get(pk = id)
 
 #Question model
 class Question(models.Model):

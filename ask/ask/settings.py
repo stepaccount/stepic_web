@@ -23,6 +23,9 @@ SECRET_KEY = '_pz)d)l-(salc@-wi6ll_j4)+_*ch2@e9df_*b(@_!zu&%09=9'
 DEBUG = False
 
 TEMPLATE_DEBUG = True
+#TEMPLATE_DIRS = (
+#    BASE_DIR + '/templates',
+#)
 
 ALLOWED_HOSTS = ['127.0.0.1', '*']
 
