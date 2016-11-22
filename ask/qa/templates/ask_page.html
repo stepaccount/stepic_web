@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Create new question</title>
+</head>
+    <h1>What do you want to ask?</h1>
+<body>
+<form method="post" action="/ask/">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Ask!" />
+</form>
+</body>
+</html>

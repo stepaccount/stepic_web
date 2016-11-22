@@ -1,9 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse 
 from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.views.decorators.http import require_GET
+from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 from .models import *
+from .forms import *
 
 @require_GET
 def test(request, *args):
@@ -40,7 +43,7 @@ def popular(request, *args):
     except EmptyPage:
         page = paginator.page(paginator.num_pages)
     return render(request, 'pop_page.html', {'questions': page.object_list, 'paginator': paginator, 'page': page,})
-    
+
 @require_GET
 def question(request, id):
     try:
@@ -55,3 +58,19 @@ def question(request, id):
     except Answer.DoesNotExists:
         answers = []
     return render(request, 'question_page.html', {'question': user_question, 'answers': answers,})
+
+def new_ask(request):
+    if request.method == 'POST':
+        #POST
+        ask_form = AskForm(request.POST)
+        if ask_form.is_valid():
+            new_que = ask_form.save()
+            return HttpResponseRedirect(new_que.get_absolute_url())
+    else:
+        #GET
+        ask_form = AskForm() #Blank form
+    return render(request, 'ask_page.html', {'form': ask_form})
+
+@require_POST
+def add_answer(request):
+    pass
