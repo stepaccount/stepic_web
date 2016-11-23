@@ -12,6 +12,18 @@ from .forms import *
 def test(request, *args):
     return HttpResponse('OK')
 
+def signup(request):
+    if request.method == "POST":
+        #POST
+    else:
+        #GET
+        
+def login(request):
+    if request.method == "POST":
+        #POST
+    else:
+        #GET
+
 @require_GET
 def mainroot(request, *args):
     try:
