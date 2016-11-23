@@ -29,7 +29,7 @@ class AskForm(forms.Form):
 #Answer addition form
 class AnswerForm(forms.Form):
     text = forms.CharField(label = "Answer", widget = forms.Textarea)
-    question = forms.CharField(widget = forms.Textarea)
+    question = forms.IntegerField()
     hidden_id = forms.CharField(widget=forms.HiddenInput())
     def save(self):
         que_id = int(hidden_id)

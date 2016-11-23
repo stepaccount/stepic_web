@@ -57,7 +57,7 @@ def question(request, id):
         answers = Answer.objects.filter(question = user_question)[:]
     except Answer.DoesNotExists:
         answers = []
-    answer_form = AnswerForm(initial = {'question': user_question.text, 'hidden_id': q_num, }) 
+    answer_form = AnswerForm(initial = {'question': q_num, 'hidden_id': q_num, }) 
     return render(request, 'question_page.html', {'question': user_question, 'answers': answers, 'form': answer_form, })
 
 def new_ask(request):
