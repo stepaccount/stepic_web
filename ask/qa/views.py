@@ -44,8 +44,11 @@ def popular(request, *args):
         page = paginator.page(paginator.num_pages)
     return render(request, 'pop_page.html', {'questions': page.object_list, 'paginator': paginator, 'page': page,})
 
-@require_GET
+
 def question(request, id):
+    #Test error
+    if request.method == "POST":
+        return render('OK')
     try:
         q_num = int(id)
         user_question = Question.objects.get(pk = q_num)

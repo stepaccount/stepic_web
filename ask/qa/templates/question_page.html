@@ -17,7 +17,7 @@
     <p>
     <h2>Answer the question</h2>
     <form method="post" action="/answer/">
-    {% csrf_token %}
+        {% csrf_token %}
         {{ form }}
         <input type="submit" value="Answer!" />
     </form>
