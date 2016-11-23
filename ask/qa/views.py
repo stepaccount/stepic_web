@@ -105,27 +105,27 @@ def question(request, id):
     except Answer.DoesNotExists:
         answers = []
     answer_form = AnswerForm(initial = {'question': q_num, 'hidden_id': q_num, }) 
-    answer_form.__user = request.user
+    answer_form._user = request.user
     return render(request, 'question_page.html', {'question': user_question, 'answers': answers, 'form': answer_form, })
 
 def new_ask(request):
     if request.method == 'POST':
         #POST
         ask_form = AskForm(request.POST)
-        ask_form.__user = request.user
+        ask_form._user = request.user
         if ask_form.is_valid():
             new_que = ask_form.save()
             return HttpResponseRedirect(new_que.get_absolute_url())
     else:
         #GET
         ask_form = AskForm() #Blank form
-        ask_form.__user = request.user
+        ask_form._user = request.user
     return render(request, 'ask_page.html', {'form': ask_form})
 
 @require_POST
 def add_answer(request):
     answer_form = AnswerForm(request.POST)
-    answer_form.__user = request.user
+    answer_form._user = request.user
     if answer_form.is_valid():
         try:
             q_num = int(answer_form.cleaned_data['hidden_id'])

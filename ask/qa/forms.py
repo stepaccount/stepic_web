@@ -50,7 +50,7 @@ class AskForm(forms.Form):
     def save(self):
         #create new question
         #TODO с русскоязычным содержанием форм НЕ РАБОТАЕТ, бросает исключение!!!
-        que = Question(title = self.cleaned_data['title'], text = self.cleaned_data['text'], author = self.__user)
+        que = Question(title = self.cleaned_data['title'], text = self.cleaned_data['text'], author = self._user)
         que.save()
         return que
 
@@ -60,8 +60,8 @@ class AnswerForm(forms.Form):
     question = forms.IntegerField()
     hidden_id = forms.CharField(widget=forms.HiddenInput())
     def save(self):
-        que_id = int(hidden_id)
+        que_id = int(self.cleaned_data['hidden_id'])
         user_question = Question.objects.get(pk = que_id)
-        user_answer = Answer(text = self.cleaned_data['text'], question = user_question, author = self.__user)
+        user_answer = Answer(text = self.cleaned_data['text'], question = user_question, author = self._user)
         user_answer.save()
         return user_answer
