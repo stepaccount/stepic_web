@@ -92,7 +92,7 @@ def popular(request, *args):
 def question(request, id):
     #Test error
     if request.method == "POST":
-        return HttpResponse('OK')
+        return add_answer(request)
     try:
         q_num = int(id)
         user_question = Question.objects.get(pk = q_num)
