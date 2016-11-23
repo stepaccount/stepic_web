@@ -6,7 +6,7 @@
 <body>
 <form method="post" action="/ask/">
     {% csrf_token %}
-    {{ form }}
+    {{ form.as_ul }}
     <input type="submit" value="Ask!" />
 </form>
 </body>

@@ -18,7 +18,7 @@
     <h2>Answer the question</h2>
     <form method="post" action="/answer/">
         {% csrf_token %}
-        {{ form }}
+        {{ form.as_ul }}
         <input type="submit" value="Answer!" />
     </form>
     </p>

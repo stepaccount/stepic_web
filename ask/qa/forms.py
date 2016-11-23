@@ -3,6 +3,21 @@
 from django import forms
 from .models import *
 
+#Register form
+class RegisterForm(forms.Form):
+    username = forms.CharField(label = "User", max_length=50, required = True)
+    email = forms.EmailField()
+    password = forms.CharFiled(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
+    def save(self):
+        pass
+
+#Login form
+class LoginForm(forms.Form):
+    username = forms.CharField(label = "User", max_length=50, required = True)
+    password = forms.CharFiled(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
+    def save(self):
+        pass
+
 #Question addition form
 class AskForm(forms.Form):
     title = forms.CharField(label = "Title")

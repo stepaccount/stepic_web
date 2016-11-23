@@ -1,0 +1,13 @@
+<html>
+<head>
+<title>Create new user</title>
+</head>
+    <h1>New user registration</h1>
+<body>
+<form method="post" action="/signup/">
+    {% csrf_token %}
+    {{ form.as_ul }}
+    <input type="submit" value="Register!" />
+</form>
+</body>
+</html>
