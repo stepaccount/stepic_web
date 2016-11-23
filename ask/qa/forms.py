@@ -30,3 +30,10 @@ class AskForm(forms.Form):
 class AnswerForm(forms.Form):
     text = forms.CharField(label = "Answer", widget = forms.Textarea)
     question = forms.CharField(widget = forms.Textarea)
+    hidden_id = forms.CharField(widget=forms.HiddenInput())
+    def save(self):
+        que_id = int(hidden_id)
+        user_question = Question.objects.get(pk = que_id)
+        user_answer = Answer(text = self.cleaned_data['text'], question = user_question)
+        user_answer.save()
+        return user_answer

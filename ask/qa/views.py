@@ -57,7 +57,8 @@ def question(request, id):
         answers = Answer.objects.filter(question = user_question)[:]
     except Answer.DoesNotExists:
         answers = []
-    return render(request, 'question_page.html', {'question': user_question, 'answers': answers,})
+    answer_form = AnswerForm(initial = {'question': user_question.text, 'hidden_id': q_num, }) 
+    return render(request, 'question_page.html', {'question': user_question, 'answers': answers, 'form': answer_form, })
 
 def new_ask(request):
     if request.method == 'POST':
@@ -73,4 +74,19 @@ def new_ask(request):
 
 @require_POST
 def add_answer(request):
-    pass
+    answer_form = AnswerForm(request.POST)
+    if answer_form.is_valid():
+        try:
+            q_num = int(answer_form.cleaned_data['hidden_id'])
+            #user_question = Question.objects.get(pk = q_num)
+        except Exception:
+            raise Http404
+        new_ans = answer_form.save()
+        return HttpResponseRedirect(new_ans.question.get_absolute_url())
+    else:
+        try:
+            q_num = int(answer_form.cleaned_data['hidden_id'])
+            user_question = Question.objects.get(pk = q_num)
+        except Exception:
+            raise Http404
+        return HttpResponseRedirect(user_question.get_absolute_url())
