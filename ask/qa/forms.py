@@ -1,20 +1,33 @@
 # -*- coding: utf-8 -*-
 
 from django import forms
+from django.contrib.auth.models import User
 from .models import *
 
 #Register form
 class RegisterForm(forms.Form):
     username = forms.CharField(label = "User", max_length=50, required = True)
     email = forms.EmailField()
-    password = forms.CharFiled(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
+    password = forms.CharField(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        try:
+            User.objects.get(username = username)
+            #No exception - user already exists
+            raise forms.ValidationError(u'Пользователь с таким именем уже существует', code=9)
+        except User.DoesNotExist:
+            pass
+        return username
+
     def save(self):
-        pass
+        user = User.objects.create_user(self.cleaned_data['username'], self.cleaned_data['email'], self.cleaned_data['password'])
+        user.save()
+        return user
 
 #Login form
 class LoginForm(forms.Form):
     username = forms.CharField(label = "User", max_length=50, required = True)
-    password = forms.CharFiled(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
+    password = forms.CharField(label = "Password", widget=forms.PasswordInput(), max_length = 50, required = True)
     def save(self):
         pass
 
@@ -37,7 +50,7 @@ class AskForm(forms.Form):
     def save(self):
         #create new question
         #TODO с русскоязычным содержанием форм НЕ РАБОТАЕТ, бросает исключение!!!
-        que = Question(title = self.cleaned_data['title'], text = self.cleaned_data['text'])
+        que = Question(title = self.cleaned_data['title'], text = self.cleaned_data['text'], author = self.__user)
         que.save()
         return que
 
@@ -49,6 +62,6 @@ class AnswerForm(forms.Form):
     def save(self):
         que_id = int(hidden_id)
         user_question = Question.objects.get(pk = que_id)
-        user_answer = Answer(text = self.cleaned_data['text'], question = user_question)
+        user_answer = Answer(text = self.cleaned_data['text'], question = user_question, author = self.__user)
         user_answer.save()
         return user_answer
